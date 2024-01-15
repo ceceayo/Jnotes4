@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
 import com.jesse.jnotes.R
 import com.jesse.jnotes.components.DropDownMenuComponent
-import com.jesse.jnotes.logic.fileAccessPlugins
+import com.jesse.jnotes.logic.StorageApi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConfigPage(nav: NavController) {
+fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi>) {
     val scrollState = rememberScrollState()
     val storageApiSelectorDropdownEnabled = false
     val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
@@ -38,6 +38,7 @@ fun ConfigPage(nav: NavController) {
 
         Text("Storage api: $storageApiValue")
         DropDownMenuComponent(content = fileAccessPlugins.keys.toList(), value = setStorageApi)
+
 
         Button(onClick = {
                          nav.navigate("home")

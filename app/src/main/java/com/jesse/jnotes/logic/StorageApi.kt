@@ -1,9 +1,12 @@
 package com.jesse.jnotes.logic
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 
 interface StorageApi {
+
     // Setup
+    fun giveContext(context_arg: Context)
     @Composable
     fun ConfigComponent()
     fun isReady(): Boolean

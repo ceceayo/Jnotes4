@@ -9,18 +9,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
 import com.jesse.jnotes.R
+import com.jesse.jnotes.components.DropDownMenuComponent
+import com.jesse.jnotes.logic.fileAccessPlugins
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfigPage(nav: NavController) {
     val scrollState = rememberScrollState()
     val storageApiSelectorDropdownEnabled = false
+    val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
     Column(
         Modifier
             .fillMaxSize()
@@ -32,7 +36,8 @@ fun ConfigPage(nav: NavController) {
             )
         Text("Pre Launch Configuration for JNotes", Modifier.align(Alignment.CenterHorizontally))
 
-
+        Text("Storage api: $storageApiValue")
+        DropDownMenuComponent(content = fileAccessPlugins.keys.toList(), value = setStorageApi)
 
         Button(onClick = {
                          nav.navigate("home")

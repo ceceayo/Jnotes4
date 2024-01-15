@@ -50,3 +50,21 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
+
+@Preview
+@Composable
+fun PreviewFromHell() {
+    val nav = rememberNavController()
+    JnotesTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            NavHost(nav, "config") {
+                composable("config") { ConfigPage(nav) }
+                composable("home") { Text("Hi") }
+            }
+        }
+    }
+}

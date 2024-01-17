@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.jesse.jnotes.logic.StorageApi
+import java.io.File
+import java.nio.charset.Charset
 
 class FilesDirStorage () : StorageApi {
     private var context: Context? = null
@@ -32,7 +34,13 @@ class FilesDirStorage () : StorageApi {
     }
 
     override fun getFileContents(path: String): String {
-        TODO("Not yet implemented")
+        val f = File(context!!.filesDir, path)
+        assert(f.isFile)
+        assert(f.canRead())
+        assert(f.exists())
+        val s = f.readText(Charset.defaultCharset())
+        println(s)
+        return s
     }
 
     override fun setFileContents(path: String, contents: String) {

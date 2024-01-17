@@ -11,6 +11,7 @@ class FilesDirStorage () : StorageApi {
     private var context: Context? = null
     override fun giveContext(context_arg: Context) {
         context = context_arg
+        println(context_arg.filesDir)
     }
     @Composable
     override fun ConfigComponent() {

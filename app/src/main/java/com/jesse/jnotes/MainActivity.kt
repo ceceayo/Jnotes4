@@ -22,7 +22,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         for (storageApi in fileAccessPlugins) {
             storageApi.value.giveContext(applicationContext)
-            storageApi.value.getFileContents("a.txt")
+            storageApi.value.setFileContents(arrayOf(),"test.txt", "All systems go for storageapi!!!!")
+            //println(storageApi.value.getFileContents("test.txt"))
+            //println(storageApi.value.listDirectory("")!!.joinToString(" ... "))
         }
         super.onCreate(savedInstanceState)
         setContent {

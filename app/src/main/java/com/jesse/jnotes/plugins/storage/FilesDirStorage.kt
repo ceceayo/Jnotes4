@@ -30,11 +30,11 @@ class FilesDirStorage () : StorageApi {
         return ""
     }
 
-    override fun listDirectory(path: String) {
-        TODO("Not yet implemented")
+    override fun listDirectory(folders: Array<String>, path: String): Array<out String>? {
+        return context!!.fileList()
     }
 
-    override fun getFileContents(path: String): String {
+    override fun getFileContents(folders: Array<String>, path: String): String {
         val f = File(context!!.filesDir, path)
         assert(f.isFile)
         assert(f.canRead())
@@ -44,9 +44,11 @@ class FilesDirStorage () : StorageApi {
         return s
     }
 
-    override fun setFileContents(path: String, contents: String) {
-        TODO("Not yet implemented")
+    override fun setFileContents(folders: Array<String>, path: String, contents: String) {
+        val f = File(context!!.filesDir, path)
+        val w = f.writer(Charset.defaultCharset())
+        w.write(contents)
+        w.close()
     }
-
 
 }

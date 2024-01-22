@@ -21,10 +21,9 @@ import com.jesse.jnotes.logic.StorageApi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi>) {
+fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi>, storageApiValue: String, setStorageApi: (String) -> Unit) {
     val scrollState = rememberScrollState()
-    val storageApiSelectorDropdownEnabled = false
-    val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
+    //val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
     Column(
         Modifier
             .fillMaxSize()
@@ -39,6 +38,9 @@ fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi
         Text("Storage api: $storageApiValue")
         DropDownMenuComponent(content = fileAccessPlugins.keys.toList(), value = setStorageApi)
 
+        if (storageApiValue in fileAccessPlugins.keys) {
+            fileAccessPlugins[storageApiValue]!!.ConfigComponent()
+        }
 
         Button(onClick = {
                          nav.navigate("home")

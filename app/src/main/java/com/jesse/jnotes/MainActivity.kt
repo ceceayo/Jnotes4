@@ -8,6 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -18,6 +20,7 @@ import com.jesse.jnotes.ui.theme.JnotesTheme
 import com.jesse.jnotes.views.ConfigPage
 
 class MainActivity : ComponentActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         for (storageApi in fileAccessPlugins) {
@@ -30,6 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val nav = rememberNavController()
+            val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
             JnotesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -37,28 +41,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(nav, "config") {
-                        composable("config") { ConfigPage(nav, fileAccessPlugins) }
+                        composable("config") { ConfigPage(nav, fileAccessPlugins, storageApiValue, setStorageApi) }
                         composable("home") { Text("Hi") }
                     }
                 }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewFromHell() {
-    val nav = rememberNavController()
-    JnotesTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            NavHost(nav, "config") {
-                composable("config") { ConfigPage(nav, fileAccessPlugins) }
-                composable("home") { Text("Hi") }
             }
         }
     }

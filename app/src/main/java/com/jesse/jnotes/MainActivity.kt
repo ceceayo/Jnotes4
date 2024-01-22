@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
             storageApi.value.giveContext(applicationContext)
             storageApi.value.setFileContents(arrayOf("mydir"),"test.txt", "All systems go for storageapi!!!!")
             println(storageApi.value.getFileContents(arrayOf("mydir"), "test.txt"))
-            //println(storageApi.value.listDirectory("")!!.joinToString(" ... "))
         }
         super.onCreate(savedInstanceState)
         setContent {

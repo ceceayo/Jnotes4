@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import com.jesse.jnotes.logic.StorageApi
 import java.io.File
 import java.nio.charset.Charset
+import java.nio.file.Files
+import java.nio.file.Paths
 
 class FilesDirStorage () : StorageApi {
     private var context: Context? = null
@@ -32,6 +34,7 @@ class FilesDirStorage () : StorageApi {
 
 
     override fun getFileContents(folders: Array<String>, path: String): String {
+        Files.createDirectories(Paths.get(context!!.filesDir.toString(), folders.joinToString("/", "", "/")))
         var calculatedPath = folders.joinToString("/", "", "/") + path
         if (calculatedPath[0] == '/') {
             calculatedPath = calculatedPath.drop(1)
@@ -46,6 +49,7 @@ class FilesDirStorage () : StorageApi {
     }
 
     override fun setFileContents(folders: Array<String>, path: String, contents: String) {
+        Files.createDirectories(Paths.get(context!!.filesDir.toString(), folders.joinToString("/", "", "/")))
         var calculatedPath = folders.joinToString("/", "", "/") + path
         if (calculatedPath[0] == '/') {
             calculatedPath = calculatedPath.drop(1)

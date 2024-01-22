@@ -1,5 +1,7 @@
 package com.jesse.jnotes.views
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,18 +23,24 @@ import com.jesse.jnotes.logic.StorageApi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi>, storageApiValue: String, setStorageApi: (String) -> Unit) {
+fun ConfigPage(
+    nav: NavController,
+    fileAccessPlugins: HashMap<String, StorageApi>,
+    storageApiValue: String,
+    setStorageApi: (String) -> Unit
+) {
     val scrollState = rememberScrollState()
     //val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
     Column(
         Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)) {
+            .verticalScroll(scrollState)
+    ) {
         Icon(
             painter = painterResource(R.drawable.ic_launcher_foreground),
             contentDescription = "Configuration For JNotes",
             modifier = Modifier.fillMaxWidth()
-            )
+        )
         Text("Pre Launch Configuration for JNotes", Modifier.align(Alignment.CenterHorizontally))
 
         Text("Storage api: $storageApiValue")
@@ -42,13 +50,19 @@ fun ConfigPage(nav: NavController, fileAccessPlugins: HashMap<String, StorageApi
             fileAccessPlugins[storageApiValue]!!.ConfigComponent()
         }
 
-        Button(onClick = {
-                         nav.navigate("home")
-        },
+        Button(
+            onClick = {
+                if ((storageApiValue in fileAccessPlugins.keys) and (
+                            fileAccessPlugins[storageApiValue]?.isReady() == true
+                            )
+                ) {
+                    nav.navigate("home")
+                }
+            },
             Modifier
                 .fillMaxWidth()
                 .padding(Dp(24F))
-            ) {
+        ) {
             Text("Go!")
         }
     }

@@ -14,7 +14,6 @@ interface StorageApi {
     fun saveConfig(): String
 
     // File and folder access
-    fun listDirectory(folders: Array<String>, path: String): Array<out String>?
     fun getFileContents(folders: Array<String>, path: String): String
     fun setFileContents(folders: Array<String>, path: String, contents: String)
 }

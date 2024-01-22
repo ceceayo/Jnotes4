@@ -30,12 +30,13 @@ class FilesDirStorage () : StorageApi {
         return ""
     }
 
-    override fun listDirectory(folders: Array<String>, path: String): Array<out String>? {
-        return context!!.fileList()
-    }
 
     override fun getFileContents(folders: Array<String>, path: String): String {
-        val f = File(context!!.filesDir, path)
+        var calculatedPath = folders.joinToString("/", "", "/") + path
+        if (calculatedPath[0] == '/') {
+            calculatedPath = calculatedPath.drop(1)
+        }
+        val f = File(context!!.filesDir, calculatedPath)
         assert(f.isFile)
         assert(f.canRead())
         assert(f.exists())
@@ -45,7 +46,11 @@ class FilesDirStorage () : StorageApi {
     }
 
     override fun setFileContents(folders: Array<String>, path: String, contents: String) {
-        val f = File(context!!.filesDir, path)
+        var calculatedPath = folders.joinToString("/", "", "/") + path
+        if (calculatedPath[0] == '/') {
+            calculatedPath = calculatedPath.drop(1)
+        }
+        val f = File(context!!.filesDir, calculatedPath)
         val w = f.writer(Charset.defaultCharset())
         w.write(contents)
         w.close()

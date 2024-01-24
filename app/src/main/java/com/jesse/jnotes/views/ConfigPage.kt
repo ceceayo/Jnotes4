@@ -1,7 +1,5 @@
 package com.jesse.jnotes.views
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,8 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,7 +24,8 @@ fun ConfigPage(
     nav: NavController,
     fileAccessPlugins: HashMap<String, StorageApi>,
     storageApiValue: String,
-    setStorageApi: (String) -> Unit
+    setStorageApi: (String) -> Unit,
+    selectedStorageApi: MutableState<StorageApi?>
 ) {
     val scrollState = rememberScrollState()
     //val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
@@ -56,6 +54,7 @@ fun ConfigPage(
                             fileAccessPlugins[storageApiValue]?.isReady() == true
                             )
                 ) {
+                    selectedStorageApi.value = fileAccessPlugins[storageApiValue]!!
                     nav.navigate("home")
                 }
             },

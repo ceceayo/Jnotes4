@@ -33,13 +33,16 @@ class FilesDirStorage () : StorageApi {
     }
 
 
-    override fun getFileContents(folders: Array<String>, path: String): String {
+    override fun getFileContents(folders: Array<String>, path: String): String? {
         Files.createDirectories(Paths.get(context!!.filesDir.toString(), folders.joinToString("/", "", "/")))
         var calculatedPath = folders.joinToString("/", "", "/") + path
         if (calculatedPath[0] == '/') {
             calculatedPath = calculatedPath.drop(1)
         }
         val f = File(context!!.filesDir, calculatedPath)
+        if (!f.exists() and !f.isFile) {
+            return null
+        }
         assert(f.isFile)
         assert(f.canRead())
         assert(f.exists())

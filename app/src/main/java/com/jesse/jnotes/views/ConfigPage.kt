@@ -22,6 +22,7 @@ import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.proto.ConfigDataKt
 import com.jesse.jnotes.proto.Note
 import com.jesse.jnotes.proto.configData
+import com.jesse.jnotes.proto.note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +66,10 @@ fun ConfigPage(
                     config.value = configData {
                         fileStorage = storageApiValue
                         fileStorageOptions = fileAccessPlugins[storageApiValue]!!.saveConfig()
+                        notes += note {
+                            path += "a"
+                            name = "my file"
+                        }
                     }
                     nav.navigate("home")
                 }

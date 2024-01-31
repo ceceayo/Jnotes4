@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(nav, "config") {
                         composable("config") { ConfigPage(nav, fileAccessPlugins, storageApiValue, setStorageApi, selectedStorageApi, config) }
-                        composable("home") { FilesPage(selectedStorageApi) }
+                        composable("home") { FilesPage(config) }
                     }
                 }
             }

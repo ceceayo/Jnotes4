@@ -1,3 +1,5 @@
+@file:Suppress("EmptyMethod")
+
 package com.jesse.jnotes.logic
 
 import android.content.Context

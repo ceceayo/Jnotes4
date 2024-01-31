@@ -44,7 +44,7 @@ fun DropDownMenuComponent(
 
 @Preview
 @Composable
-private fun preview() {
+private fun Preview() {
     val (state, setState) = remember { mutableStateOf("hi") }
     Column {
         Text(state)

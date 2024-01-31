@@ -39,7 +39,7 @@ fun ConfigNewVaultPage(
             .verticalScroll(scrollState)
     ) {
         Icon(
-            painter = painterResource(android.R.drawable.ic_menu_manage),
+            painter = painterResource(android.R.drawable.ic_menu_preferences),
             contentDescription = "Configuration For JNotes",
             modifier = Modifier.fillMaxWidth().height(Dp(64F))
         )

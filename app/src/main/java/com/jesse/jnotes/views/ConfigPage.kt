@@ -14,9 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
+import com.google.protobuf.kotlin.DslList
+import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.R
 import com.jesse.jnotes.components.DropDownMenuComponent
 import com.jesse.jnotes.logic.StorageApi
+import com.jesse.jnotes.proto.ConfigDataKt
+import com.jesse.jnotes.proto.Note
+import com.jesse.jnotes.proto.configData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +30,8 @@ fun ConfigPage(
     fileAccessPlugins: HashMap<String, StorageApi>,
     storageApiValue: String,
     setStorageApi: (String) -> Unit,
-    selectedStorageApi: MutableState<StorageApi?>
+    selectedStorageApi: MutableState<StorageApi?>,
+    config: MutableState<ConfigData?>
 ) {
     val scrollState = rememberScrollState()
     //val (storageApiValue, setStorageApi) = remember { mutableStateOf("-- please select a storage api --") }
@@ -55,6 +61,11 @@ fun ConfigPage(
                             )
                 ) {
                     selectedStorageApi.value = fileAccessPlugins[storageApiValue]!!
+                    //config.value = dataConfigurationObject
+                    config.value = configData {
+                        fileStorage = storageApiValue
+                        fileStorageOptions = fileAccessPlugins[storageApiValue]!!.saveConfig()
+                    }
                     nav.navigate("home")
                 }
             },

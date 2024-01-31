@@ -1,0 +1,16 @@
+syntax = "proto3";
+package jnotes;
+
+option java_package = "com.jesse.jnotes.proto";
+option java_multiple_files = true;
+
+message ConfigData {
+    string file_storage = 1;
+    string file_storage_options = 2;
+    repeated Note notes = 3;
+}
+
+message Note {
+    repeated string path = 1;
+    string name = 2;
+}

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavArgument
+import androidx.navigation.NavArgumentBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsDsl
+import androidx.navigation.Navigator
+import androidx.navigation.Navigator.Extras
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.Note
 
@@ -65,14 +71,15 @@ private fun FilesPageNestFolderComponent(filesPageNestFolder: FilesPageNestFolde
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilesPage(config: MutableState<ConfigData?>) {
+fun FilesPage(config: MutableState<ConfigData?>, nav: NavHostController) {
     Scaffold {
         Column(Modifier.padding(it)) {
             Text("test")
             config.value!!.notesList.forEach { note ->
-                Text(note.name)
+                Button({nav.navigate("note/aaaaaaa")}) {
+                    Text(note.name)
+                }
             }
         }
     }

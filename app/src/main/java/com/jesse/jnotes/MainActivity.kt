@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.fileAccessPlugins
 import com.jesse.jnotes.proto.ConfigData
@@ -46,7 +48,9 @@ class MainActivity : ComponentActivity() {
                     NavHost(nav, "config") {
                         composable("config") { ConfigPage(nav) }
                         composable("config/new_vault") { ConfigNewVaultPage(nav, fileAccessPlugins, storageApiValue, setStorageApi, selectedStorageApi, config) }
-                        composable("home") { FilesPage(config) }
+                        composable("home") { FilesPage(config, nav) }
+                        composable("note/{note}", arguments = listOf(navArgument("note") { type = NavType.StringArrayType })) { backStackEntry -> backStackEntry.arguments?.getString("note")
+                            ?.let { Text(it as String) } }
                     }
                 }
             }

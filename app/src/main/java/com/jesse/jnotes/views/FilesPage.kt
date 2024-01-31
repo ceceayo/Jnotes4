@@ -20,15 +20,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.navigation.NavArgument
-import androidx.navigation.NavArgumentBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsDsl
-import androidx.navigation.Navigator
-import androidx.navigation.Navigator.Extras
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.Note
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 private data class FilesPageNestFolder(
     val name: String, val folders: List<FilesPageNestFolder>, val files: List<FilesPageNestFile>
@@ -71,8 +66,9 @@ private fun FilesPageNestFolderComponent(filesPageNestFolder: FilesPageNestFolde
     }
 }
 
+@Destination
 @Composable
-fun FilesPage(config: MutableState<ConfigData?>, nav: NavHostController) {
+fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
     Scaffold {
         Column(Modifier.padding(it)) {
             Text("test")

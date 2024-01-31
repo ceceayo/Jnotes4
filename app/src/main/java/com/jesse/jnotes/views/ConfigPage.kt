@@ -10,18 +10,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.navigation.NavController
+import com.jesse.jnotes.views.destinations.ConfigNewVaultPageDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun ConfigPage(
-    nav: NavController
+    navigator: DestinationsNavigator
 ) {
     Scaffold() {
         Column() {
             Text("JNotes")
             Button(onClick = {
-                nav.navigate("config/new_vault")
+                navigator.navigate(ConfigNewVaultPageDestination(ConfigNewVaultPageDestination.NavArgs(null)))
+
             }, Modifier
                 .fillMaxWidth()
                 .padding(Dp(16F))

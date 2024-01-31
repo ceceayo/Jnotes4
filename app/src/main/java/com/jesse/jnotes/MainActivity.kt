@@ -6,22 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.fileAccessPlugins
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.ui.theme.JnotesTheme
 import com.jesse.jnotes.views.ConfigNewVaultPage
-import com.jesse.jnotes.views.ConfigPage
-import com.jesse.jnotes.views.FilesPage
+import com.jesse.jnotes.views.NavGraphs
+import com.jesse.jnotes.views.destinations.ConfigNewVaultPageDestination
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.manualcomposablecalls.composable
 
 class MainActivity : ComponentActivity() {
 
@@ -44,13 +41,25 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ) {
+                ) {/*
                     NavHost(nav, "config") {
                         composable("config") { ConfigPage(nav) }
                         composable("config/new_vault") { ConfigNewVaultPage(nav, fileAccessPlugins, storageApiValue, setStorageApi, selectedStorageApi, config) }
                         composable("home") { FilesPage(config, nav) }
                         composable("note/{note}", arguments = listOf(navArgument("note") { type = NavType.StringArrayType })) { backStackEntry -> backStackEntry.arguments?.getString("note")
                             ?.let { Text(it as String) } }
+                    }*/
+                    DestinationsNavHost(navGraph = NavGraphs.root) {
+                        composable(ConfigNewVaultPageDestination) {
+                            ConfigNewVaultPage(
+                                nav = destinationsNavigator,
+                                fileAccessPlugins = fileAccessPlugins,
+                                storageApiValue = storageApiValue,
+                                setStorageApi = setStorageApi,
+                                selectedStorageApi = selectedStorageApi,
+                                config = config
+                            )
+                        }
                     }
                 }
             }

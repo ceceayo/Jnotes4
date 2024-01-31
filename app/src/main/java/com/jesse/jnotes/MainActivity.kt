@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.fileAccessPlugins
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.ui.theme.JnotesTheme
+import com.jesse.jnotes.views.ConfigNewVaultPage
 import com.jesse.jnotes.views.ConfigPage
 import com.jesse.jnotes.views.FilesPage
 
@@ -42,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(nav, "config") {
-                        composable("config") { ConfigPage(nav, fileAccessPlugins, storageApiValue, setStorageApi, selectedStorageApi, config) }
+                        composable("config") { ConfigPage(nav) }
+                        composable("config/new_vault") { ConfigNewVaultPage(nav, fileAccessPlugins, storageApiValue, setStorageApi, selectedStorageApi, config) }
                         composable("home") { FilesPage(config) }
                     }
                 }

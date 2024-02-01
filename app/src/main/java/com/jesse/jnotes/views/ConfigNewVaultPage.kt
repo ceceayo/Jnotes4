@@ -21,6 +21,7 @@ import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.configData
 import com.jesse.jnotes.proto.note
+import com.jesse.jnotes.views.destinations.FilesPageDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -72,7 +73,7 @@ fun ConfigNewVaultPage(
                             name = "my file"
                         }
                     }
-                    nav.navigate("home")
+                    nav.navigate(FilesPageDestination)
                 }
             },
             Modifier

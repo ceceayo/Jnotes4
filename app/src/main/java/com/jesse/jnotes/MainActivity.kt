@@ -14,13 +14,11 @@ import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.fileAccessPlugins
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.ui.theme.JnotesTheme
-import com.jesse.jnotes.views.ConfigNewVaultPage
-import com.jesse.jnotes.views.ConfigPage
-import com.jesse.jnotes.views.FilesPage
-import com.jesse.jnotes.views.NavGraphs
+import com.jesse.jnotes.views.*
 import com.jesse.jnotes.views.destinations.ConfigNewVaultPageDestination
 import com.jesse.jnotes.views.destinations.ConfigPageDestination
 import com.jesse.jnotes.views.destinations.FilesPageDestination
+import com.jesse.jnotes.views.destinations.ViewFilePageDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 
@@ -72,6 +70,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(FilesPageDestination) {
                             FilesPage(config = config, nav = destinationsNavigator)
+                        }
+                        composable(ViewFilePageDestination) {
+                            ViewFilePage(config = config, file = navArgs.file, selectedStorageApi = selectedStorageApi)
                         }
                     }
                 }

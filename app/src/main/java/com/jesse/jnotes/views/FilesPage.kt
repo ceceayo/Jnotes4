@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.Note
+import com.jesse.jnotes.views.destinations.ViewFilePageDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -72,8 +73,8 @@ fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
     Scaffold {
         Column(Modifier.padding(it)) {
             Text("test")
-            config.value!!.notesList.forEach { note ->
-                Button({nav.navigate("note/aaaaaaa")}) {
+            config.value!!.notesList.forEachIndexed { index, note ->
+                Button({nav.navigate(ViewFilePageDestination(file = index))}) {
                     Text(note.name)
                 }
             }
@@ -85,7 +86,10 @@ fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
 @Composable
 private fun FilesPageNestFolderComponentPreview() {
     val scrollState = rememberScrollState()
-    Column(Modifier.verticalScroll(scrollState).padding(Dp(8F))) {
+    Column(
+        Modifier
+            .verticalScroll(scrollState)
+            .padding(Dp(8F))) {
         FilesPageNestFolderComponent(
             filesPageNestFolder = FilesPageNestFolder(
                 files = emptyList(), folders = listOf(

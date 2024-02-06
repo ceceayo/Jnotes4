@@ -1,5 +1,5 @@
 syntax = "proto3";
-package jnotes;
+package com.jesse.jnotes.proto;
 
 option java_package = "com.jesse.jnotes.proto";
 option java_multiple_files = true;

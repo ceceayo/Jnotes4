@@ -8,3 +8,7 @@ import com.jesse.jnotes.plugins.storage.FilesDirStorage
 val fileAccessPlugins = hashMapOf<String, StorageApi>(
     Pair("FilesDirStorage", FilesDirStorage())
 )
+
+val blockPlugins = hashMapOf<String, BlockPlugin>(
+
+)

@@ -18,9 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import com.jesse.jnotes.components.DropDownMenuComponent
 import com.jesse.jnotes.logic.StorageApi
-import com.jesse.jnotes.proto.ConfigData
-import com.jesse.jnotes.proto.configData
-import com.jesse.jnotes.proto.note
+import com.jesse.jnotes.proto.*
 import com.jesse.jnotes.views.destinations.FilesPageDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -70,7 +68,15 @@ fun ConfigNewVaultPage(
                         fileStorageOptions = fileAccessPlugins[storageApiValue]!!.saveConfig()
                         notes += note {
                             path += "a"
+                            noteType = "tests"
                             name = "my file"
+                        }
+                        notetypes += noteType {
+                            name = "test"
+                            blocks += configNoteTypeBlock {
+                                name = "simple"
+                                blockType = "TextRenderBlock"
+                            }
                         }
                     }
                     nav.navigate(FilesPageDestination)

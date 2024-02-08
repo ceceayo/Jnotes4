@@ -42,7 +42,7 @@ fun ViewFilePage(
         if ((text == null) or (text == "")) {
             text = noteContent {
                 title = note.name
-                type = ""
+                type = "test"
             }.toString()
             selectedStorageApi.value!!.setFileContents(
                 arrayOf("notes").plus(note.pathList),
@@ -51,7 +51,7 @@ fun ViewFilePage(
             )
         }
         Column(Modifier.padding(it)) {
-            Text(text!!)
+            //config.value!!.notetypesList
         }
     }
 }

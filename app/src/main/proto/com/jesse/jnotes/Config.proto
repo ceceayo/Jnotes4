@@ -19,9 +19,9 @@ message Note {
 
 message NoteType {
     string name = 1;
-    message Block {
-        string name = 1;
-        string block_type = 2;
-    }
-    repeated Block blocks = 2;
+    repeated ConfigNoteTypeBlock blocks = 2;
+}
+message ConfigNoteTypeBlock {
+    string name = 1;
+    string block_type = 2;
 }

@@ -15,11 +15,11 @@ message NoteBlock {
     string                                                                            content  =  2;
     string                                                                           rendered  =  3;
     enum block_state {
-        NOT_GENERATED                                                                           = 0;
-        GENERATED                                                                               = 1;
-        FAILED                                                                                  = 2;
-        WARNINGS                                                                                = 3;
-        OUT_OF_DATE                                                                             = 4;
+        NOT_GENERATED                                                                          =  0;
+        GENERATED                                                                              =  1;
+        FAILED                                                                                 =  2;
+        WARNINGS                                                                               =  3;
+        OUT_OF_DATE                                                                            =  4;
     }
     block_state                                                                         state  =  4;
 }

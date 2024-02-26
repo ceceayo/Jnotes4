@@ -40,7 +40,7 @@ class FilesDirStorage () : StorageApi {
             calculatedPath = calculatedPath.drop(1)
         }
         val f = File(context!!.filesDir, calculatedPath)
-        if (!f.exists() and !f.isFile) {
+        if (!f.exists() or !f.isFile or !f.canRead()) {
             return null
         }
         assert(f.isFile)

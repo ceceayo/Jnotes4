@@ -68,7 +68,7 @@ fun ConfigNewVaultPage(
                         fileStorageOptions = fileAccessPlugins[storageApiValue]!!.saveConfig()
                         notes += note {
                             path += "a"
-                            noteType = "tests"
+                            noteType = "test"
                             name = "my file"
                         }
                         notetypes += noteType {

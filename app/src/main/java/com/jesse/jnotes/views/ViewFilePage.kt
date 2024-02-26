@@ -3,21 +3,17 @@ package com.jesse.jnotes.views
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
+import com.google.protobuf.ByteString
 import com.jesse.jnotes.logic.StorageApi
-import com.jesse.jnotes.proto.ConfigData
-import com.jesse.jnotes.proto.noteContent
+import com.jesse.jnotes.proto.*
 import com.ramcosta.composedestinations.annotation.Destination
+import java.nio.charset.Charset
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,6 +23,13 @@ fun ViewFilePage(
     file: Int, config: MutableState<ConfigData?>, selectedStorageApi: MutableState<StorageApi?>
 ) {
     val note = config.value!!.notesList[file]
+    val note_type_string = config.value!!.notesList[file].noteType
+    var note_type: NoteType?
+    config.value!!.notetypesList.forEach { iter_notetype ->
+        if (iter_notetype.name == note_type_string) {
+            note_type = iter_notetype
+        }
+    }
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = {
@@ -35,23 +38,41 @@ fun ViewFilePage(
             colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
         )
     }) {
-        var text = selectedStorageApi.value!!.getFileContents(
+        val text = selectedStorageApi.value!!.getFileContents(
             arrayOf("notes").plus(note.pathList),
             "content"
         )
+        val currentNote: NoteContent?
         if ((text == null) or (text == "")) {
-            text = noteContent {
+            currentNote = noteContent {
                 title = note.name
                 type = "test"
-            }.toString()
+                blocks += noteBlock {
+                    id = 1
+                    content = "aaa"
+                    rendered = "<h1>aaa</h1>"
+                    state = NoteBlock.block_state.GENERATED
+                }
+            }
             selectedStorageApi.value!!.setFileContents(
                 arrayOf("notes").plus(note.pathList),
                 "content",
-                text
+                text.toString()
             )
+        } else {
+            currentNote = NoteContent.parseFrom(text.toString().toByteArray(Charset.defaultCharset()))
         }
+
         Column(Modifier.padding(it)) {
-            //config.value!!.notetypesList
+            val generated_blocks_list: HashMap<Int, NoteBlock> = hashMapOf()
+            currentNote!!.blocksList.forEach { block ->
+                generated_blocks_list[block.id] = block
+            }
+            val sorted_blocks =
+              generated_blocks_list.toSortedMap(compareByDescending { it })
+            sorted_blocks.forEach {block ->
+                Text(block.value.content)
+            }
         }
     }
 }

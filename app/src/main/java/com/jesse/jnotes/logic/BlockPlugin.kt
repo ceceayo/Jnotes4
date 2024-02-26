@@ -15,6 +15,8 @@ interface BlockPlugin {
     @Composable
     fun Block(content: String, config: String) : Unit
 
+    fun as_html(content: String, config: String) : String
+
 
     /**
      * Is_valid_content

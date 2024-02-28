@@ -15,15 +15,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.jesse.jnotes.logic.BlockPlugin
+import com.jesse.jnotes.plugins.blocks.TextRenderBlock
 
 
 // args will become block: BlockPlugin, data: String, config: String
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-@Preview
-fun ViewBlock() {
+fun ViewBlock(block: BlockPlugin, data: String, config: String) {
     val state = rememberPagerState(pageCount = {3})
     HorizontalPager(state = state) {page ->
-        Text("page $page", Modifier.fillMaxSize())
+        when (page) {
+            0 -> block.Block(content = data, config = config)
+            1 -> Text(block.as_html(content = data, config = config))
+            2 -> Text("To be implemented")
+        }
     }
+}
+
+@Composable
+@Preview
+fun test_view_block() {
+    ViewBlock(block = TextRenderBlock, data = "Jesse is fantastisch", config = "")
 }

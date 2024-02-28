@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import com.google.protobuf.ByteString
+import com.jesse.jnotes.components.ViewBlock
 import com.jesse.jnotes.logic.StorageApi
+import com.jesse.jnotes.logic.blockPlugins
 import com.jesse.jnotes.proto.*
 import com.ramcosta.composedestinations.annotation.Destination
 import java.nio.charset.Charset
@@ -24,10 +26,10 @@ fun ViewFilePage(
 ) {
     val note = config.value!!.notesList[file]
     val note_type_string = config.value!!.notesList[file].noteType
-    var note_type: NoteType?
+    var noteType: NoteType? = null
     config.value!!.notetypesList.forEach { iter_notetype ->
         if (iter_notetype.name == note_type_string) {
-            note_type = iter_notetype
+            noteType = iter_notetype
         }
     }
     Scaffold(topBar = {
@@ -43,7 +45,7 @@ fun ViewFilePage(
             "content"
         )
         val currentNote: NoteContent?
-        if ((text == null) or (text == "")) {
+        if ((text == null) or (text == "") or (text == "null")) {
             currentNote = noteContent {
                 title = note.name
                 type = "test"
@@ -69,9 +71,13 @@ fun ViewFilePage(
                 generated_blocks_list[block.id] = block
             }
             val sorted_blocks =
-              generated_blocks_list.toSortedMap(compareByDescending { it })
-            sorted_blocks.forEach {block ->
-                Text(block.value.content)
+                generated_blocks_list.toSortedMap(compareByDescending { it })
+            sorted_blocks.forEach { block ->
+                ViewBlock(
+                    block = blockPlugins[noteType!!.blocksList[block.value.id].blockType]!!,
+                    data = block.value.content,
+                    config = ""
+                )
             }
         }
     }

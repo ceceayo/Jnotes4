@@ -77,6 +77,10 @@ fun ConfigNewVaultPage(
                                 name = "simple"
                                 blockType = "TextRenderBlock"
                             }
+                            blocks += configNoteTypeBlock {
+                                name = "simpler"
+                                blockType = "TextRenderBlock"
+                            }
                         }
                     }
                     nav.navigate(FilesPageDestination)

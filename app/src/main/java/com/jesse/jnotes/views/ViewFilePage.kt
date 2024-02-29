@@ -13,6 +13,7 @@ import com.google.protobuf.ByteString
 import com.jesse.jnotes.components.ViewBlock
 import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.blockPlugins
+import com.jesse.jnotes.plugins.blocks.TextRenderBlock
 import com.jesse.jnotes.proto.*
 import com.ramcosta.composedestinations.annotation.Destination
 import java.nio.charset.Charset
@@ -50,11 +51,18 @@ fun ViewFilePage(
                 title = note.name
                 type = "test"
                 blocks += noteBlock {
-                    id = 1
+                    id = 0
                     content = "aaa"
                     rendered = "<h1>aaa</h1>"
                     state = NoteBlock.block_state.GENERATED
                 }
+                blocks += noteBlock {
+                    id = 1
+                    content = "bbb"
+                    rendered = "<h1>bbb</h1>"
+                    state = NoteBlock.block_state.GENERATED
+                }
+
             }
             selectedStorageApi.value!!.setFileContents(
                 arrayOf("notes").plus(note.pathList),
@@ -71,7 +79,7 @@ fun ViewFilePage(
                 generated_blocks_list[block.id] = block
             }
             val sorted_blocks =
-                generated_blocks_list.toSortedMap(compareByDescending { it })
+                generated_blocks_list.toSortedMap(compareBy { it })
             sorted_blocks.forEach { block ->
                 ViewBlock(
                     block = blockPlugins[noteType!!.blocksList[block.value.id].blockType]!!,

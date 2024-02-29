@@ -3,12 +3,15 @@ package com.jesse.jnotes.views
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.Dp
 import com.google.protobuf.ByteString
 import com.jesse.jnotes.components.ViewBlock
 import com.jesse.jnotes.logic.StorageApi
@@ -28,6 +31,7 @@ fun ViewFilePage(
     val note = config.value!!.notesList[file]
     val note_type_string = config.value!!.notesList[file].noteType
     var noteType: NoteType? = null
+    val scrollState = rememberScrollState()
     config.value!!.notetypesList.forEach { iter_notetype ->
         if (iter_notetype.name == note_type_string) {
             noteType = iter_notetype
@@ -73,7 +77,10 @@ fun ViewFilePage(
             currentNote = NoteContent.parseFrom(text.toString().toByteArray(Charset.defaultCharset()))
         }
 
-        Column(Modifier.padding(it)) {
+        Column(
+            Modifier
+                .padding(it)
+                .verticalScroll(scrollState)) {
             val generated_blocks_list: HashMap<Int, NoteBlock> = hashMapOf()
             currentNote!!.blocksList.forEach { block ->
                 generated_blocks_list[block.id] = block
@@ -84,7 +91,7 @@ fun ViewFilePage(
                 ViewBlock(
                     block = blockPlugins[noteType!!.blocksList[block.value.id].blockType]!!,
                     data = block.value.content,
-                    config = ""
+                    config = noteType!!.blocksList[block.value.id].config
                 )
             }
         }

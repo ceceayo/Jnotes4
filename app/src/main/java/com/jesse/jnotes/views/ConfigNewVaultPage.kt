@@ -76,10 +76,13 @@ fun ConfigNewVaultPage(
                             blocks += configNoteTypeBlock {
                                 name = "simple"
                                 blockType = "TextRenderBlock"
+                                this.config = "" // using this. syntax; shadows outer var config
+
                             }
                             blocks += configNoteTypeBlock {
                                 name = "simpler"
                                 blockType = "TextRenderBlock"
+                                this.config = "" // using this. syntax; shadows outer var config
                             }
                         }
                     }

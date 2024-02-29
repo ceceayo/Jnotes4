@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jesse.jnotes.logic.BlockPlugin
 import com.jesse.jnotes.plugins.blocks.TextRenderBlock
@@ -23,10 +24,10 @@ import com.jesse.jnotes.plugins.blocks.TextRenderBlock
 @Composable
 fun ViewBlock(block: BlockPlugin, data: String, config: String) {
     val state = rememberPagerState(pageCount = {3})
-    HorizontalPager(state = state) {page ->
+    HorizontalPager(state = state, Modifier.height(Dp(300F)).padding(Dp(12F))) { page ->
         when (page) {
             0 -> block.Block(content = data, config = config)
-            1 -> Text(block.as_html(content = data, config = config))
+            1 -> WebView(block.as_html(data, config))
             2 -> Text("To be implemented")
         }
     }

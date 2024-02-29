@@ -24,4 +24,5 @@ message NoteType {
 message ConfigNoteTypeBlock {
     string name = 1;
     string block_type = 2;
+    string config = 3;
 }

@@ -63,4 +63,13 @@ class FilesDirStorage () : StorageApi {
         w.close()
     }
 
+    override fun setBinFileContents(folders: Array<String>, path: String): File {
+        Files.createDirectories(Paths.get(context!!.filesDir.toString(), folders.joinToString("/", "", "/")))
+        var calculatedPath = folders.joinToString("/", "", "/") + path
+        if (calculatedPath[0] == '/') {
+            calculatedPath = calculatedPath.drop(1)
+        }
+        val f = File(context!!.filesDir, calculatedPath)
+        return f
+    }
 }

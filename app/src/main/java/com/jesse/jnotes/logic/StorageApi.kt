@@ -4,6 +4,7 @@ package com.jesse.jnotes.logic
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import java.io.File
 
 interface StorageApi {
 
@@ -18,4 +19,5 @@ interface StorageApi {
     // File and folder access
     fun getFileContents(folders: Array<String>, path: String): String?
     fun setFileContents(folders: Array<String>, path: String, contents: String)
+    fun setBinFileContents(folders: Array<String>, path: String): File
 }

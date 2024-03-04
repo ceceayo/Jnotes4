@@ -11,14 +11,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.unit.Dp
-import com.google.protobuf.ByteString
 import com.jesse.jnotes.components.ViewBlock
 import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.blockPlugins
-import com.jesse.jnotes.plugins.blocks.TextRenderBlock
 import com.jesse.jnotes.proto.*
 import com.ramcosta.composedestinations.annotation.Destination
+import kotlinx.coroutines.flow.merge
 import java.nio.charset.Charset
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -68,13 +66,18 @@ fun ViewFilePage(
                 }
 
             }
-            selectedStorageApi.value!!.setFileContents(
+            val f = selectedStorageApi.value!!.setBinFileContents(
                 arrayOf("notes").plus(note.pathList),
                 "content",
-                text.toString()
             )
+            currentNote.writeTo(f.outputStream())
+
         } else {
-            currentNote = NoteContent.parseFrom(text.toString().toByteArray(Charset.defaultCharset()))
+            //currentNote = NoteContent.parseFrom(text.toString().toByteArray(Charset.defaultCharset()))
+            val f = text.toString().toByteArray(Charset.defaultCharset())
+            val builder = NoteContent.newBuilder()
+            currentNote = builder.mergeFrom(f).build()
+
         }
 
         Column(
@@ -91,7 +94,12 @@ fun ViewFilePage(
                 ViewBlock(
                     block = blockPlugins[noteType!!.blocksList[block.value.id].blockType]!!,
                     data = block.value.content,
-                    config = noteType!!.blocksList[block.value.id].config
+                    config = noteType!!.blocksList[block.value.id].config,
+                    blockValue = block.value,
+                    note = note,
+                    globalConfig = config,
+                    selectedStorageApi = selectedStorageApi,
+                    currentNote = currentNote,
                 )
             }
         }

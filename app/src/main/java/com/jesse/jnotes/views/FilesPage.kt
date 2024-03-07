@@ -31,11 +31,11 @@ private data class FilesPageNestFolder(
 )
 
 private data class FilesPageNestFile(
-    val name: String, val note: Note?
+    val name: String, val note: Note?, val index: Int
 )
 
 @Composable
-private fun FilesPageNestFolderComponent(filesPageNestFolder: FilesPageNestFolder) {
+private fun FilesPageNestFolderComponent(filesPageNestFolder: FilesPageNestFolder, nav: DestinationsNavigator) {
     Column(
         Modifier
             .padding(Dp(8F), Dp(0F), Dp(0F), Dp(0F))
@@ -56,14 +56,21 @@ private fun FilesPageNestFolderComponent(filesPageNestFolder: FilesPageNestFolde
                 }
                 if (visible) {
                     filesPageNestFolder.folders.forEach { folder ->
-                        FilesPageNestFolderComponent(filesPageNestFolder = folder)
+                        FilesPageNestFolderComponent(filesPageNestFolder = folder, nav)
                     }
                     filesPageNestFolder.files.forEach { file ->
-                        Text(file.name)
+                        FilesPageNestFileComponent(file = file, nav = nav, index = file.index)
                     }
                 }
 
         }
+    }
+}
+
+@Composable
+private fun FilesPageNestFileComponent(file: FilesPageNestFile, nav: DestinationsNavigator, index: Int) {
+    Button({nav.navigate(ViewFilePageDestination(file = index))}, Modifier.fillMaxWidth()) {
+        Text(file.name)
     }
 }
 
@@ -74,32 +81,8 @@ fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
         Column(Modifier.padding(it)) {
             Text("test")
             config.value!!.notesList.forEachIndexed { index, note ->
-                Button({nav.navigate(ViewFilePageDestination(file = index))}) {
-                    Text(note.name)
-                }
+                FilesPageNestFileComponent(file = FilesPageNestFile(note.name, note, index), nav = nav, index = index)
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun FilesPageNestFolderComponentPreview() {
-    val scrollState = rememberScrollState()
-    Column(
-        Modifier
-            .verticalScroll(scrollState)
-            .padding(Dp(8F))) {
-        FilesPageNestFolderComponent(
-            filesPageNestFolder = FilesPageNestFolder(
-                files = emptyList(), folders = listOf(
-                    FilesPageNestFolder(
-                        files = listOf(FilesPageNestFile(name = "test", note = null)),
-                        folders = emptyList(),
-                        name = "bbb"
-                    )
-                ), name = "aaa"
-            )
-        )
     }
 }

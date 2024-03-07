@@ -17,7 +17,7 @@ fun BlockEditor(
     selectedStorageApi: MutableState<StorageApi?>,
     currentNote: NoteContent
 ) {
-    var textEditorState by remember { mutableStateOf(TextEditorState.create("aaa")) }
+    var textEditorState by remember { mutableStateOf(TextEditorState.create(blockValue.content.toString())) }
     Box(modifier = Modifier.fillMaxSize()) {
         TextEditor(
             textEditorState = textEditorState,

@@ -14,7 +14,13 @@ import com.jesse.jnotes.logic.StorageApi
 import com.jesse.jnotes.logic.fileAccessPlugins
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.ui.theme.JnotesTheme
-import com.jesse.jnotes.views.*
+import com.jesse.jnotes.views.ConfigLoadVaultPage
+import com.jesse.jnotes.views.ConfigNewVaultPage
+import com.jesse.jnotes.views.ConfigPage
+import com.jesse.jnotes.views.FilesPage
+import com.jesse.jnotes.views.NavGraphs
+import com.jesse.jnotes.views.ViewFilePage
+import com.jesse.jnotes.views.destinations.ConfigLoadVaultPageDestination
 import com.jesse.jnotes.views.destinations.ConfigNewVaultPageDestination
 import com.jesse.jnotes.views.destinations.ConfigPageDestination
 import com.jesse.jnotes.views.destinations.FilesPageDestination
@@ -60,6 +66,16 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(ConfigNewVaultPageDestination) {
                             ConfigNewVaultPage(
+                                nav = destinationsNavigator,
+                                fileAccessPlugins = fileAccessPlugins,
+                                storageApiValue = storageApiValue,
+                                setStorageApi = setStorageApi,
+                                selectedStorageApi = selectedStorageApi,
+                                config = config
+                            )
+                        }
+                        composable(ConfigLoadVaultPageDestination) {
+                            ConfigLoadVaultPage(
                                 nav = destinationsNavigator,
                                 fileAccessPlugins = fileAccessPlugins,
                                 storageApiValue = storageApiValue,

@@ -1,5 +1,6 @@
 package com.jesse.jnotes.views
 
+import java.nio.charset.Charset
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination(
 )
 @Composable
-fun ConfigNewVaultPage(
+fun ConfigLoadVaultPage(
     nav: DestinationsNavigator,
     fileAccessPlugins: HashMap<String, StorageApi>,
     storageApiValue: String?,
@@ -50,7 +51,7 @@ fun ConfigNewVaultPage(
             contentDescription = "Configuration For JNotes",
             modifier = Modifier.fillMaxWidth().height(Dp(64F))
         )
-        Text("Pre Launch Configuration for JNotes", Modifier.align(Alignment.CenterHorizontally))
+        Text("Load Vault Bitte Bitte", Modifier.align(Alignment.CenterHorizontally))
 
         Text("Storage api: $storageApiValue")
         DropDownMenuComponent(content = fileAccessPlugins.keys.toList(), value = setStorageApi)
@@ -66,34 +67,14 @@ fun ConfigNewVaultPage(
                             )
                 ) {
                     selectedStorageApi.value = fileAccessPlugins[storageApiValue]!!
-                    //config.value = dataConfigurationObject
-                    config.value = configData {
-                        fileStorage = storageApiValue!!
-                        fileStorageOptions = fileAccessPlugins[storageApiValue]!!.saveConfig()
-                        notes += note {
-                            path += "a"
-                            noteType = "test"
-                            name = "my file"
-                        }
-                        notetypes += noteType {
-                            name = "test"
-                            blocks += configNoteTypeBlock {
-                                name = "simple"
-                                blockType = "TextRenderBlock"
-                                this.config = "" // using this. syntax; shadows outer var config
-
-                            }
-                            blocks += configNoteTypeBlock {
-                                name = "simpler"
-                                blockType = "TextRenderBlock"
-                                this.config = "" // using this. syntax; shadows outer var config
-                            }
-                        }
-                    }
-                    config.value!!.writeTo(
-                        selectedStorageApi.value!!.setBinFileContents(arrayOf(), "config")
-                            .outputStream()
+                    val text = selectedStorageApi.value!!.getFileContents(
+                        arrayOf(),
+                        "config"
                     )
+                    val f = text.toString().toByteArray(Charset.defaultCharset())
+                    val builder = ConfigData.newBuilder()
+                    config.value = builder.mergeFrom(f).build()
+
                     nav.navigate(FilesPageDestination)
                 }
             },

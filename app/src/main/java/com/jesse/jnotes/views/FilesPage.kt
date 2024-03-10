@@ -3,9 +3,11 @@ package com.jesse.jnotes.views
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.Note
+import com.jesse.jnotes.views.destinations.NewFilePageDestination
 import com.jesse.jnotes.views.destinations.ViewFilePageDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -77,7 +79,13 @@ private fun FilesPageNestFileComponent(file: FilesPageNestFile, nav: Destination
 @Destination
 @Composable
 fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
-    Scaffold {
+    Scaffold (floatingActionButton = {
+        FloatingActionButton(onClick = {
+            nav.navigate(NewFilePageDestination)
+        }) {
+            Icon(Icons.Filled.Add, "Add a new note to vault.")
+        }
+    }) {
         Column(Modifier.padding(it)) {
             Text("test")
             config.value!!.notesList.forEachIndexed { index, note ->

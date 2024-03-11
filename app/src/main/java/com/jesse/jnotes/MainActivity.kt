@@ -93,7 +93,7 @@ class MainActivity : ComponentActivity() {
                             ViewFilePage(config = config, file = navArgs.file, selectedStorageApi = selectedStorageApi)
                         }
                         composable(NewFilePageDestination) {
-                            NewFilePage(nav = destinationsNavigator, config = config)
+                            NewFilePage(nav = destinationsNavigator, config = config, selectedStorageApi = selectedStorageApi)
                         }
                     }
                 }

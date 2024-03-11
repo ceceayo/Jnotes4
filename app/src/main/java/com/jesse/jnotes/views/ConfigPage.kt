@@ -44,8 +44,8 @@ fun ConfigPage(
                 Text("Create a new vault")
             }
             Text("or", Modifier.fillMaxWidth().drawBehind {
-                this.drawLine(Color.Gray, Offset(20f, this.center.y), Offset(this.size.width - 20f, this.center.y))
-                this.drawLine(Color.White, Offset(this.center.x-50f, this.center.y), Offset(this.center.x+50f, this.center.y))
+                this.drawLine(Color.Black, Offset(20f, this.center.y), Offset(this.center.x - 50f, this.center.y))
+                this.drawLine(Color.Black, Offset(this.center.x + 50f, this.center.y), Offset(this.size.width - 20f, this.center.y))
             }, textAlign = TextAlign.Center)
             Button(onClick = {
                 navigator.navigate(ConfigLoadVaultPageDestination(ConfigLoadVaultPageDestination.NavArgs(null)))

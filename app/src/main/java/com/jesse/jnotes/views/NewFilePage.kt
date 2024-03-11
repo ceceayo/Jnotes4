@@ -34,7 +34,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 fun NewFilePage(nav: DestinationsNavigator, config: MutableState<ConfigData?>) {
     var type by remember {mutableStateOf("-- please select a type --")}
-    var folders = remember { mutableStateListOf<String>() }
+    val folders = remember { mutableStateListOf<String>() }
     var filename by remember { mutableStateOf<String>("") }
     val scrollState = rememberScrollState()
     Column(

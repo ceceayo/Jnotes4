@@ -3,10 +3,9 @@ package com.jesse.jnotes.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,7 +19,8 @@ fun DropDownMenuComponent(
     Column {
         var expanded by remember { mutableStateOf(false) }
         Button(onClick = { expanded = !expanded }) {
-            Text("test")
+            Icon(Icons.Default.ArrowDropDown, "select")
+            Text("Select")
         }
         DropdownMenu(
             expanded = expanded, onDismissRequest = { expanded = false },

@@ -20,7 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import com.jesse.jnotes.proto.ConfigData
 import com.jesse.jnotes.proto.Note
 import com.jesse.jnotes.views.destinations.NewFilePageDestination
@@ -87,7 +90,7 @@ fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
         }
     }) {
         Column(Modifier.padding(it)) {
-            Text("test")
+            Text("JNotes", fontSize = TextUnit(30F, TextUnitType.Sp), textAlign = TextAlign.Center)
             config.value!!.notesList.forEachIndexed { index, note ->
                 FilesPageNestFileComponent(file = FilesPageNestFile(note.name, note, index), nav = nav, index = index)
             }

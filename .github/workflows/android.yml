@@ -26,3 +26,5 @@ jobs:
       run: ./gradlew generateDebugProto generateReleaseProto
     - name: Build with Gradle
       run: ./gradlew build
+    - name: APK
+      run: ./gradlew assambleRelease

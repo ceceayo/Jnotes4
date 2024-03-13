@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -79,6 +75,7 @@ private fun FilesPageNestFileComponent(file: FilesPageNestFile, nav: Destination
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
@@ -88,9 +85,13 @@ fun FilesPage(config: MutableState<ConfigData?>, nav: DestinationsNavigator) {
         }) {
             Icon(Icons.Filled.Add, "Add a new note to vault.")
         }
+    }, topBar = {
+        CenterAlignedTopAppBar(title = { Text("JNotes") }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onTertiaryContainer
+        ))
     }) {
-        Column(Modifier.padding(it)) {
-            Text("JNotes", fontSize = TextUnit(30F, TextUnitType.Sp), textAlign = TextAlign.Center)
+        Column(Modifier.padding(it).padding(Dp(24F))) {
             config.value!!.notesList.forEachIndexed { index, note ->
                 FilesPageNestFileComponent(file = FilesPageNestFile(note.name, note, index), nav = nav, index = index)
             }

@@ -68,13 +68,13 @@ fun ConfigPage(
                     .drawBehind {
                         this.drawLine(
                             Color.Black,
-                            Offset(20f, this.center.y),
+                            Offset(100f, this.center.y),
                             Offset(this.center.x - 50f, this.center.y)
                         )
                         this.drawLine(
                             Color.Black,
                             Offset(this.center.x + 50f, this.center.y),
-                            Offset(this.size.width - 20f, this.center.y)
+                            Offset(this.size.width - 100f, this.center.y)
                         )
                     }, textAlign = TextAlign.Center
             )

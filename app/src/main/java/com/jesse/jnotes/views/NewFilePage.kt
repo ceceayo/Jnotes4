@@ -153,7 +153,7 @@ fun NewFilePage(
                         selectedStorageApi.value!!.setBinFileContents(arrayOf("notes").plus(folders).plus(filename) , "content")
                             .outputStream()
                     )
-
+                    nav.navigateUp()
 
                 }, Modifier.fillMaxWidth()
             ) {

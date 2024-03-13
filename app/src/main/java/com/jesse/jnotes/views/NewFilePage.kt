@@ -142,8 +142,8 @@ fun NewFilePage(
                         selectedNoteType!!.blocksList.forEachIndexed { idx, type ->
                             this.blocks += noteBlock {
                                 id = idx
-                                content = ""
-                                rendered = ""
+                                content = "no content yet... swipe left."
+                                rendered = "?"
                                 state = NoteBlock.block_state.NOT_GENERATED
                             }
                         }
